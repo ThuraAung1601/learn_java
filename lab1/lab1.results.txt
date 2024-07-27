@@ -1,0 +1,48 @@
+tree .
+.
+├── lab1
+│   ├── Labs
+│   │   └── Lab1_SomeExercises.java
+│   └── solutions
+│       └── pack1
+│           ├── Breed.java
+│           └── Dog.java
+
+--task1---
+[Lily, Daisy, Tulip, Daisy]
+[Lily, Daisy]
+--task2---
+[Lily, Daisy, 30]
+[Lily, Daisy]
+LilymySuffix
+[LilymySuffix, Daisy]
+[LilymySuffix, Daisy, 30]
+shallow copy
+--task3---
+[Lily]
+--task4---
+Tulip Daisy Lily 
+Dog [breed=jack, weight=1440] Dog [breed=beagle, weight=2300] Dog [breed=pomeranian, weight=1200] 
+--task5---
+jack	1
+pomeranian	1
+beagle	2
+--task6---
+The number of unique element is 3
+--task7---
+Index is at 0
+ArrayList 	takes 11114833
+LinkedList 	takes 10751000
+Array 	takes 4229917
+Index is at 2500
+ArrayList 	takes 5753083
+LinkedList 	takes 7516050583
+Array 	takes 3546208
+Index is at 5000
+ArrayList 	takes 5209
+LinkedList 	takes 14980524708
+Array 	takes 275791
+Index is at 7500
+ArrayList 	takes 12625
+LinkedList 	takes 7429433208
+Array 	takes 2417
