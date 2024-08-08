@@ -1,4 +1,4 @@
-// Disclaimer: I used ChatGPT to solve this specific task!!!
+// Disclaimer: ChatGPT was used to solve this specific task!!!
 
 package solutions.pack5_Postfix;
 
