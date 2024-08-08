@@ -1,3 +1,5 @@
+// Disclaimer: I used ChatGPT to solve this specific task!!!
+
 package solutions.pack5_Postfix;
 
 import java.util.Iterator;
