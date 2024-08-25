@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class java_basic {
     public static boolean isPalindrome(ArrayList ls) {
@@ -73,5 +74,17 @@ public class java_basic {
 
         System.out.println("Is ls2 palindrome?: " + isPalindrome(ls2));
         System.out.println("Is ls3 palindrome?: " + isPalindrome(ls3));
+
+        int[] l1 = {100, 9, -1, 1002, 4, 5};
+        System.out.print("Unsorted: ");
+        for(int i: l1) {
+            System.out.print(i + " ");
+        }
+        Arrays.sort(l1); 
+        System.out.println("");
+        System.out.print("Sorted: ");
+        for(int i: l1) {
+            System.out.print(i + " ");
+        }
     }
 }
