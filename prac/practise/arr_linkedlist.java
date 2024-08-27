@@ -1,43 +1,102 @@
 // ----------- Array ------------------
 class MyArray {
-    private int MAX_SIZE = 1;
-    private int size = 0;
-    private int[] data;
+    int size = 0;
+    int MAX_SIZE = 100;
+    int[] data = new int[MAX_SIZE];
 
-    MyArray() {
-        data = new int[MAX_SIZE];
-    }
-
-    MyArray(int... arr) {
-        if(arr.length > MAX_SIZE) {
+    MyArray() {}
+    MyArray(int... a) {
+        if(a.length > size) {
             expand(2);
         }
-        for(int i: arr) {
-            this.add(i);
+        for(int i: a) {
+            add(i);
         }
     }
-    
     public void add(int num) {
-        if(size >= MAX_SIZE) {
-            expand(2);
-        }
-        // data[size] = num;
-        // size++;
         data[size++] = num;
     }
-
     public int getAt(int index) {
-        if(index >= size) {
-            return -1;
-        }
         return data[index];
     }
-
     public void setAt(int index, int num) {
-        if(index >= size) {
-            return;
-        }
         data[index] = num;
+    }
+    public void expand(int k) {
+        MAX_SIZE *= k;
+        int[] temp = new int[MAX_SIZE];
+        for(int i = 0; i < size; i++) {
+            temp[i] = data[i];
+        }
+        data = temp;
+    }
+    public boolean find(int num) {
+        for(int a: data) {
+            if(a == num) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public int findIndex(int num) {
+        for(int i = 0; i < size; i++) {
+            if(data[i] == num) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    public void deleteAt(int index) {
+        data[index] = data[size-1];
+        size--;
+    }
+    public void delete(int num) {
+        int index = findIndex(num);
+        deleteAt(index);
+    }
+
+    public void rotateLeft(int r) {
+        if (r > size) {
+            r = r % size;
+        }
+        
+        reverseArray(0, size - 1);
+        reverseArray(0, r - 1);
+        reverseArray(r, size - 1);
+    }
+
+    public void rotateRight(int r) {
+        if (r > size) {
+            r = r % size;
+        }
+
+        reverseArray(0, size - 1);
+        reverseArray(size - r, size - 1);
+        reverseArray(0, size - r - 1);
+    }
+
+    public void reverseArray(int start, int end) {
+        while (start < end) {
+            int temp = data[start];
+            data[start] = data[end];
+            data[end] = temp;
+            start++;
+            end--;
+        }
+    }
+
+    public MyArray clone() {
+        MyArray clone = new MyArray();
+        for(int i = 0; i < size; i++) {
+            clone.add(data[i]);
+            // System.out.println(temp[i]);
+        }
+        // System.out.println(clone.size());
+        return clone;
+    }
+
+    public int size() {
+        return size;
     }
 
     public boolean isFull() {
@@ -48,116 +107,17 @@ class MyArray {
         return size == 0;
     }
 
-    public int size() {
-        return size;
-    }
-
-    public void expand(int k) {
-        MAX_SIZE = MAX_SIZE * k;
-        int[] temp = new int[MAX_SIZE];
-        for(int i = 0; i < size; i++) {
-            temp[i] = data[i];
-        }
-        data = temp;
-    }
-
-    public int[] cloner() {
-        int[] clone = new int[size];
-        for (int i = 0; i < size; i++) {
-            clone[i] = data[i];
-        }
-        return clone;
-    }
-
-    public MyArray clone() {
-        MyArray clone = new MyArray();
-        for (int i = 0; i < size; i++) {
-            clone.add(data[i]);
-        }
-        return clone;
-    }
-
-    // brute-force search O(n)
-    public boolean find(int num) {
-        for(int i: data) {
-            if(i == num) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public void reverse() {
-        int start = 0; int end = size - 1;
-        while(start < end) {
-            int temp = data[start];
-            data[start] = data[end];
-            data[end] = temp;
-            start++; end--;
-        }
-    }
-
-    public void reverse(int start, int end) {
-        while(start < end) {
-            int temp = data[start];
-            data[start] = data[end];
-            data[end] = temp;
-            start++; end--;
-        }
-    }
-
-    public void rotate(int r) {
-        if (r < 0 || r >= size) {
-            // Invalid rotation, do nothing or throw an error
-            return;
-        }
-    
-        r = r % size; // In case r is greater than size
-        reverse(0, size - 1);
-        reverse(0, r - 1);
-        reverse(r, size - 1);
-    }
-
-    public void delete(int index) {
-        // data[index] = data[size-1];
-        // size--;
-        for(int i=index; i < size-1; i++) {
-            data[i] = data[i+1];
-        }
-        size--;
-    } 
-
-    // // binary search O(logn)
-    // public boolean find(int num) {
-    //     int[] clone = cloner();
-    //     Arrays.sort(clone);
-    //     // System.out.println("Sorted array: " + Arrays.toString(clone));
-    //     int left = 0; int right = size - 1;
-    //     while (left <= right) {
-    //         int mid = (right+left)/2;
-    //         if (num == clone[mid]) {
-    //             return true;
-    //         } else if (num > clone[mid]) {
-    //             left = mid + 1;
-    //         } else {
-    //             right = mid - 1;
-    //         }
-    //     }
-    //     return false;
-    // }
-
     @Override
     public String toString() {
         StringBuffer sb = new StringBuffer();
         sb.append("[");
-        for(int i=0; i < size-1; i++) {
+        for(int i = 0; i < size-1; i++) {
             sb.append(data[i]);
             sb.append(", ");
         }
-        if (size > 0) {
-            sb.append(data[size-1]);
-        }
+        sb.append(data[size-1]);
         sb.append("]");
+
         return sb.toString();
     }
 }
@@ -323,10 +283,13 @@ public class arr_linkedlist {
         System.out.println("Array 2 Clone is " + arr3);
         // arr3.reverse();
         // System.out.println("Reversed is " + arr3);
-        arr3.rotate(2);
-        System.out.println("Rotate by 2 is " + arr3);
+        arr3.rotateRight(2);
+        System.out.println("Rotate right by 2 is " + arr3);
         arr3.delete(1);
         System.out.println("Deleted index 1 is " + arr3);
+
+        MyArray arr4 = arr1.clone();
+        System.out.println("Clone of arr1 is " + arr4);
     }
 
     public static void MyLinkedListTest() {
