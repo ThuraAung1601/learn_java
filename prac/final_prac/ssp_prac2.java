@@ -1,73 +1,160 @@
-import java.util.*;
+import java.util.Arrays;
+
+class MinHeap {
+    int MAX_SIZE = 100;
+    int size = 0;
+    int[] heap = new int[MAX_SIZE];
+
+    MinHeap() {}
+
+    public void insert(int data) {
+        int i = size++;
+        heap[i] = data;
+        int parent = (i - 1) / 2;
+        // check up to 0th index - root
+        while (i > 0 && heap[i] < heap[parent]) {
+            // swap
+            int temp = heap[i];
+            heap[i] = heap[parent];
+            heap[parent] = temp;
+
+            i = parent; 
+            parent = (i - 1) / 2;
+        }
+    }
+
+    public int remove() {
+        int removed = heap[0];
+        heap[0] = heap[--size];
+
+        int current = 0;
+        while (true) { 
+            int left = 2 * current + 1;
+            int right = 2 * current + 2;
+            int smallest = current;
+
+            // down to last index - size
+            if (left < size && heap[left] < heap[smallest]) {
+                smallest = left;
+            }
+            if (right < size && heap[right] < heap[smallest]) {
+                smallest = right;
+            }
+
+            // current is actually smallest
+            if (smallest == current) {
+                break;
+            }
+
+            // swap with smallest
+            int temp = heap[current];
+            heap[current] = heap[smallest];
+            heap[smallest] = temp;
+
+            // assume current points to the smallest
+            current = smallest;
+        }
+        return removed;
+    }
+
+    public int peek() {
+        return heap[0];
+    }
+
+    public boolean isFull() {
+        return size == MAX_SIZE;
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Heap: ");
+        for (int i = 0; i < size; i++) {
+            sb.append(heap[i]); // Append the value at index i
+            if (i < size - 1) {
+                sb.append(", "); // Add a comma between elements
+            }
+        }
+        return sb.toString();
+    }
+}
+
+class pQueue {
+    MinHeap minheap = new MinHeap();
+    
+    public void enqueue(int data) {
+        minheap.insert(data);
+    }
+
+    public int dequeue() {
+        return minheap.remove();
+    }
+
+    public int front() {
+        return minheap.peek();
+    }
+
+    public boolean isEmpty() {
+        return minheap.isEmpty();
+    }
+
+    @Override
+    public String toString() {
+        return minheap.toString();
+    }
+}
 
 class WGraph {
-    List<Integer> vertices;
-    List<int[]> edges; // Each edge is represented as {from, to, weight}
-    Map<Integer, List<int[]>> adjList; // v -> List of [neighbour, weight]
+    private int[][] adjMatrix; // Adjacency matrix
+    private int numVertices;
 
-    public WGraph() {
-        vertices = new ArrayList<>();
-        edges = new ArrayList<>();
-        adjList = new HashMap<>();
+    public WGraph(int numVertices) {
+        this.numVertices = numVertices;
+        adjMatrix = new int[numVertices][numVertices];
+        
+        // Initialize the adjacency matrix with a large value (infinity)
+        for (int i = 0; i < numVertices; i++) {
+            Arrays.fill(adjMatrix[i], Integer.MAX_VALUE);
+        }
     }
 
     public void addEdge(int from, int to, int weight) {
-        if (!vertices.contains(from)) {
-            vertices.add(from);
-        } 
-        if (!vertices.contains(to)) {
-            vertices.add(to);
-        }
-
-        // Check for the existence of the edge before adding it
-        for (int[] edge : edges) {
-            if ((edge[0] == from && edge[1] == to) || (edge[0] == to && edge[1] == from)) {
-                // Edge already exists; you can update weight or skip addition
-                return; // Skip if you want to prevent duplicates
-            }
-        }
-        
-        edges.add(new int[]{from, to, weight});
-    }
-
-    public void updateAdjList() {
-        for (int v : vertices) {
-            adjList.put(v, adjVertices(v));
-        }
-    }
-
-    public List<int[]> adjVertices(int vertex) {
-        List<int[]> adjV = new ArrayList<>();
-        for (int[] e : edges) {
-            if (vertex == e[0]) {
-                adjV.add(new int[]{e[1], e[2]}); // add neighbour and weight
-            } else if (vertex == e[1]) {
-                adjV.add(new int[]{e[0], e[2]}); // add neighbour and weight
-            }
-        }
-        return adjV;
+        adjMatrix[from][to] = weight;
+        adjMatrix[to][from] = weight; // For undirected graph
     }
 
     public void dijkstra(int startVertex) {
-        Map<Integer, Integer> distances = new HashMap<>();
-        for (int vertex : vertices) {
-            distances.put(vertex, Integer.MAX_VALUE);
-        }
-        distances.put(startVertex, 0);
+        int[] distances = new int[numVertices];
+        boolean[] visited = new boolean[numVertices];
 
-        Set<Integer> visited = new HashSet<>();
+        // Initialize distances to "infinity"
+        Arrays.fill(distances, Integer.MAX_VALUE);
+        distances[startVertex] = 0;
 
-        for (int i = 0; i < vertices.size() - 1; i++) {
-            int u = minDistance(distances, visited);
-            visited.add(u);
+        // Initialize the priority queue (min-heap)
+        pQueue pq = new pQueue();
+        pq.enqueue(startVertex);
 
-            for (int[] neighbor : adjList.getOrDefault(u, new ArrayList<>())) {
-                int v = neighbor[0];
-                int weight = neighbor[1];
+        while (!pq.isEmpty()) {
+            // Get the vertex with the minimum distance
+            int u = pq.dequeue();
 
-                if (!visited.contains(v) && distances.get(u) != Integer.MAX_VALUE &&
-                    distances.get(u) + weight < distances.get(v)) {
-                    distances.put(v, distances.get(u) + weight);
+            if (visited[u]) continue; // Skip if already visited
+            visited[u] = true;
+
+            // Update distances to adjacent vertices
+            for (int v = 0; v < numVertices; v++) {
+                // Check if there is an edge and if the vertex hasn't been visited
+                if (adjMatrix[u][v] != Integer.MAX_VALUE && !visited[v]) {
+                    // Relaxation step
+                    if (distances[u] + adjMatrix[u][v] < distances[v]) {
+                        distances[v] = distances[u] + adjMatrix[u][v];
+                        pq.enqueue(v); // Enqueue the vertex with updated distance
+                    }
                 }
             }
         }
@@ -75,32 +162,17 @@ class WGraph {
         printDistances(distances, startVertex);
     }
 
-    private int minDistance(Map<Integer, Integer> distances, Set<Integer> visited) {
-        int minDistance = Integer.MAX_VALUE;
-        int minVertex = -1;
-
-        for (Map.Entry<Integer, Integer> entry : distances.entrySet()) {
-            int vertex = entry.getKey();
-            int distance = entry.getValue();
-            if (!visited.contains(vertex) && distance < minDistance) {
-                minDistance = distance;
-                minVertex = vertex;
-            }
-        }
-        return minVertex;
-    }
-
-    private void printDistances(Map<Integer, Integer> distances, int startVertex) {
+    private void printDistances(int[] distances, int startVertex) {
         System.out.println("Shortest distances from vertex " + startVertex + ":");
-        for (Map.Entry<Integer, Integer> entry : distances.entrySet()) {
-            System.out.println("Vertex " + entry.getKey() + " -> " + entry.getValue());
+        for (int i = 0; i < distances.length; i++) {
+            System.out.println("Vertex " + i + " -> " + (distances[i] == Integer.MAX_VALUE ? "Infinity" : distances[i]));
         }
     }
 }
 
-public class DijkstraWithoutPQ {
+public class DijkstraWithMinHeap {
     public static void main(String[] args) {
-        WGraph graph = new WGraph();
+        WGraph graph = new WGraph(5); // Create a graph with 5 vertices
 
         // Adding edges with weights
         graph.addEdge(0, 1, 10);
@@ -110,13 +182,6 @@ public class DijkstraWithoutPQ {
         graph.addEdge(2, 3, 4);
         graph.addEdge(3, 4, 9);
         graph.addEdge(3, 2, 6);
-        
-        // Attempt to add duplicate edges
-        graph.addEdge(0, 1, 10); // This will not be added
-        graph.addEdge(1, 2, 1); // This will not be added
-
-        // Update adjacency list
-        graph.updateAdjList();
 
         // Run Dijkstra's algorithm from vertex 0
         graph.dijkstra(0);
