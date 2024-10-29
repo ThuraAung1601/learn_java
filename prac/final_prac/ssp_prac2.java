@@ -1,34 +1,66 @@
 import java.util.*;
 
-class Graph {
-    private final Map<Integer, List<int[]>> adjList;
+class WGraph {
+    List<Integer> vertices;
+    List<int[]> edges; // Each edge is represented as {from, to, weight}
+    Map<Integer, List<int[]>> adjList; // v -> List of [neighbour, weight]
 
-    public Graph() {
+    public WGraph() {
+        vertices = new ArrayList<>();
+        edges = new ArrayList<>();
         adjList = new HashMap<>();
     }
 
-    // Adds an edge from vertex u to v with the given weight
-    public void addEdge(int u, int v, int weight) {
-        adjList.computeIfAbsent(u, k -> new ArrayList<>()).add(new int[]{v, weight});
-        adjList.computeIfAbsent(v, k -> new ArrayList<>()).add(new int[]{u, weight});  // For undirected graphs
+    public void addEdge(int from, int to, int weight) {
+        if (!vertices.contains(from)) {
+            vertices.add(from);
+        } 
+        if (!vertices.contains(to)) {
+            vertices.add(to);
+        }
+
+        // Check for the existence of the edge before adding it
+        for (int[] edge : edges) {
+            if ((edge[0] == from && edge[1] == to) || (edge[0] == to && edge[1] == from)) {
+                // Edge already exists; you can update weight or skip addition
+                return; // Skip if you want to prevent duplicates
+            }
+        }
+        
+        edges.add(new int[]{from, to, weight});
+    }
+
+    public void updateAdjList() {
+        for (int v : vertices) {
+            adjList.put(v, adjVertices(v));
+        }
+    }
+
+    public List<int[]> adjVertices(int vertex) {
+        List<int[]> adjV = new ArrayList<>();
+        for (int[] e : edges) {
+            if (vertex == e[0]) {
+                adjV.add(new int[]{e[1], e[2]}); // add neighbour and weight
+            } else if (vertex == e[1]) {
+                adjV.add(new int[]{e[0], e[2]}); // add neighbour and weight
+            }
+        }
+        return adjV;
     }
 
     public void dijkstra(int startVertex) {
-        // Initialize distances with "infinity" (Integer.MAX_VALUE) for all vertices except the start
         Map<Integer, Integer> distances = new HashMap<>();
-        for (int vertex : adjList.keySet()) {
+        for (int vertex : vertices) {
             distances.put(vertex, Integer.MAX_VALUE);
         }
         distances.put(startVertex, 0);
 
         Set<Integer> visited = new HashSet<>();
 
-        for (int i = 0; i < adjList.size() - 1; i++) {
-            // Get the vertex with the minimum distance that hasn’t been visited
+        for (int i = 0; i < vertices.size() - 1; i++) {
             int u = minDistance(distances, visited);
             visited.add(u);
 
-            // Relaxation: update distances of adjacent vertices
             for (int[] neighbor : adjList.getOrDefault(u, new ArrayList<>())) {
                 int v = neighbor[0];
                 int weight = neighbor[1];
@@ -43,7 +75,6 @@ class Graph {
         printDistances(distances, startVertex);
     }
 
-    // Helper function to find the vertex with the minimum distance
     private int minDistance(Map<Integer, Integer> distances, Set<Integer> visited) {
         int minDistance = Integer.MAX_VALUE;
         int minVertex = -1;
@@ -67,10 +98,11 @@ class Graph {
     }
 }
 
-public class DijkstraWithHashMap {
+public class DijkstraWithoutPQ {
     public static void main(String[] args) {
-        Graph graph = new Graph();
+        WGraph graph = new WGraph();
 
+        // Adding edges with weights
         graph.addEdge(0, 1, 10);
         graph.addEdge(0, 4, 5);
         graph.addEdge(1, 2, 1);
@@ -78,7 +110,15 @@ public class DijkstraWithHashMap {
         graph.addEdge(2, 3, 4);
         graph.addEdge(3, 4, 9);
         graph.addEdge(3, 2, 6);
+        
+        // Attempt to add duplicate edges
+        graph.addEdge(0, 1, 10); // This will not be added
+        graph.addEdge(1, 2, 1); // This will not be added
 
-        graph.dijkstra(0);  // Find shortest paths from vertex 0
+        // Update adjacency list
+        graph.updateAdjList();
+
+        // Run Dijkstra's algorithm from vertex 0
+        graph.dijkstra(0);
     }
 }
