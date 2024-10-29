@@ -1,42 +1,41 @@
 import java.util.*;
 
 class Graph {
-    private final int vertices;
-    private final List<List<int[]>> adjList;
+    private final Map<Integer, List<int[]>> adjList;
 
-    public Graph(int vertices) {
-        this.vertices = vertices;
-        adjList = new ArrayList<>();
-        for (int i = 0; i < vertices; i++) {
-            adjList.add(new ArrayList<>());
-        }
+    public Graph() {
+        adjList = new HashMap<>();
     }
 
-    // Add an edge from vertex u to v with given weight
+    // Adds an edge from vertex u to v with the given weight
     public void addEdge(int u, int v, int weight) {
-        adjList.get(u).add(new int[]{v, weight});
-        // adjList.get(v).add(new int[]{u, weight});  // For undirected graphs; remove for directed
+        adjList.computeIfAbsent(u, k -> new ArrayList<>()).add(new int[]{v, weight});
+        adjList.computeIfAbsent(v, k -> new ArrayList<>()).add(new int[]{u, weight});  // For undirected graphs
     }
 
     public void dijkstra(int startVertex) {
-        int[] distances = new int[vertices];
-        Arrays.fill(distances, Integer.MAX_VALUE);
-        distances[startVertex] = 0;
+        // Initialize distances with "infinity" (Integer.MAX_VALUE) for all vertices except the start
+        Map<Integer, Integer> distances = new HashMap<>();
+        for (int vertex : adjList.keySet()) {
+            distances.put(vertex, Integer.MAX_VALUE);
+        }
+        distances.put(startVertex, 0);
 
-        boolean[] visited = new boolean[vertices];
+        Set<Integer> visited = new HashSet<>();
 
-        for (int i = 0; i < vertices - 1; i++) {
+        for (int i = 0; i < adjList.size() - 1; i++) {
+            // Get the vertex with the minimum distance that hasn’t been visited
             int u = minDistance(distances, visited);
-            visited[u] = true;
+            visited.add(u);
 
-            // Relax edges for the current vertex
-            for (int[] neighbor : adjList.get(u)) {
+            // Relaxation: update distances of adjacent vertices
+            for (int[] neighbor : adjList.getOrDefault(u, new ArrayList<>())) {
                 int v = neighbor[0];
                 int weight = neighbor[1];
 
-                if (!visited[v] && distances[u] != Integer.MAX_VALUE &&
-                    distances[u] + weight < distances[v]) {
-                    distances[v] = distances[u] + weight;
+                if (!visited.contains(v) && distances.get(u) != Integer.MAX_VALUE &&
+                    distances.get(u) + weight < distances.get(v)) {
+                    distances.put(v, distances.get(u) + weight);
                 }
             }
         }
@@ -45,30 +44,32 @@ class Graph {
     }
 
     // Helper function to find the vertex with the minimum distance
-    private int minDistance(int[] distances, boolean[] visited) {
+    private int minDistance(Map<Integer, Integer> distances, Set<Integer> visited) {
         int minDistance = Integer.MAX_VALUE;
-        int minIndex = -1;
+        int minVertex = -1;
 
-        for (int v = 0; v < vertices; v++) {
-            if (!visited[v] && distances[v] < minDistance) {
-                minDistance = distances[v];
-                minIndex = v;
+        for (Map.Entry<Integer, Integer> entry : distances.entrySet()) {
+            int vertex = entry.getKey();
+            int distance = entry.getValue();
+            if (!visited.contains(vertex) && distance < minDistance) {
+                minDistance = distance;
+                minVertex = vertex;
             }
         }
-        return minIndex;
+        return minVertex;
     }
 
-    private void printDistances(int[] distances, int startVertex) {
+    private void printDistances(Map<Integer, Integer> distances, int startVertex) {
         System.out.println("Shortest distances from vertex " + startVertex + ":");
-        for (int i = 0; i < distances.length; i++) {
-            System.out.println("Vertex " + i + " -> " + distances[i]);
+        for (Map.Entry<Integer, Integer> entry : distances.entrySet()) {
+            System.out.println("Vertex " + entry.getKey() + " -> " + entry.getValue());
         }
     }
 }
 
-public class DijkstraWithoutPQ {
+public class DijkstraWithHashMap {
     public static void main(String[] args) {
-        Graph graph = new Graph(5);
+        Graph graph = new Graph();
 
         graph.addEdge(0, 1, 10);
         graph.addEdge(0, 4, 5);
@@ -78,6 +79,6 @@ public class DijkstraWithoutPQ {
         graph.addEdge(3, 4, 9);
         graph.addEdge(3, 2, 6);
 
-        graph.dijkstra(0);   // Find shortest paths from vertex 0
+        graph.dijkstra(0);  // Find shortest paths from vertex 0
     }
 }
