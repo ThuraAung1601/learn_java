@@ -62,7 +62,7 @@ class Graph {
     }
 }
 
-public class ssp_prac2 {
+public class DijkstraWithoutPQ {
     public static void main(String[] args) {
         Graph graph = new Graph(5);
 
