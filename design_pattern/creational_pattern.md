@@ -79,6 +79,28 @@ public class FactoryMethodDemo {
 }
 ```
 
+```
+@startuml
+interface Document {
+  +open()
+}
+
+class WordDocument implements Document
+class PdfDocument implements Document
+
+abstract class DocumentFactory {
+  +createDocument() : Document
+}
+
+class WordFactory extends DocumentFactory
+class PdfFactory extends DocumentFactory
+
+WordFactory --> WordDocument
+PdfFactory --> PdfDocument
+DocumentFactory --> Document
+@enduml
+```
+
 ---
 
 ## Abstract Factory Pattern
@@ -187,6 +209,37 @@ public class AbstractFactoryDemo {
         c2.check();
     }
 }
+```
+
+```
+@startuml
+interface Button {
+  +paint()
+}
+interface Checkbox {
+  +check()
+}
+
+class WindowsButton implements Button
+class WindowsCheckbox implements Checkbox
+class MacButton implements Button
+class MacCheckbox implements Checkbox
+
+interface GUIFactory {
+  +createButton() : Button
+  +createCheckbox() : Checkbox
+}
+
+class WindowsFactory implements GUIFactory
+class MacFactory implements GUIFactory
+
+WindowsFactory --> WindowsButton
+WindowsFactory --> WindowsCheckbox
+MacFactory --> MacButton
+MacFactory --> MacCheckbox
+GUIFactory --> Button
+GUIFactory --> Checkbox
+@enduml
 ```
 
 ---
