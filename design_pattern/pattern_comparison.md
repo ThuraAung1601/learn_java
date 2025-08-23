@@ -92,3 +92,20 @@
 
 ---
 ---
+
+## COMPARISON
+
+| Pattern          | Simple English Meaning                               | Use Case                                                    | Pros                                                       | Cons                                                  | SOLID Support          |
+| ---------------- | ---------------------------------------------------- | ----------------------------------------------------------- | ---------------------------------------------------------- | ----------------------------------------------------- | ---------------------- |
+| Observer         | Notify many when one changes                         | News updates, event listeners                               | Loose coupling, easy to add/remove observers               | Performance issues with many observers, hard to debug | OCP                    |
+| Decorator        | Add features dynamically                             | Logging, email, GUI enhancements                            | Flexible extension, avoids subclass explosion              | Many small classes, complex debugging                 | OCP                    |
+| Strategy         | Choose algorithm at runtime                          | Payment methods, sorting algorithms                         | Easily switch algorithms, removes conditional logic        | Many small classes, client must choose strategy       | OCP                    |
+| Command          | Encapsulate a request                                | Remote control, undo/redo                                   | Supports undo, decouples sender/receiver                   | Many classes, overhead for many commands              | SRP                    |
+| Template Method  | Define algorithm skeleton, let subclasses fill steps | Data processing, report generation                          | Code reuse, enforce process                                | Hard to change template once fixed                    | Sometimes violates OCP |
+| Memento          | Save and restore object state                        | Undo in editor, game checkpoints                            | Easy to implement undo, encapsulates state                 | Uses memory, careful with complex objects             | SRP                    |
+| Adapter          | Convert one interface to another                     | Legacy system integration                                   | Reuse old code                                             | Extra layer of complexity                             | OCP                    |
+| Facade           | Simplify complex systems                             | Start a computer, database helper, home theater             | Hides complexity, easy to use                              | Can become “god object”, does not add functionality   | SRP, OCP indirectly    |
+| Factory Method   | Create one object at a time using subclasses         | Document editor (Word, PDF), game enemies                   | Easy to extend, removes direct `new` usage                 | More classes needed, one subclass per product         | SRP, OCP, DIP          |
+| Abstract Factory | Create families of related objects                   | UI toolkit (Windows or Mac buttons+checkboxes), car factory | Keeps product families consistent, easy to switch families | Harder to add new product types, more complex         | SRP, OCP, DIP          |
+
+---
