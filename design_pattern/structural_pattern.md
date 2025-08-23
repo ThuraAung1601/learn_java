@@ -2,8 +2,8 @@
 
 # 1. Adapter Pattern
 
-**Idea:** Converts one interface into another that a client expects.
-**Simple English:** Like a power plug adapter — lets incompatible interfaces work together.
+- **Idea:** Converts one interface into another that a client expects.
+- **Simple English:** Like a power plug adapter — lets incompatible interfaces work together.
 
 **Use Case:**
 
@@ -72,8 +72,8 @@ AdapterMusicPlayer --> OldMusicPlayer
 
 # 2. Decorator Pattern
 
-**Idea:** Attach additional features to an object dynamically.
-**Simple English:** Adding toppings to a pizza without altering the base pizza.
+- **Idea:** Attach additional features to an object dynamically.
+- **Simple English:** Adding toppings to a pizza without altering the base pizza.
 
 **Use Case:**
 
@@ -143,8 +143,8 @@ MilkDecorator --> Coffee
 
 # 3. Composite Pattern
 
-**Idea:** Treat individual objects and groups of objects uniformly.
-**Simple English:** Like files and folders — a folder can contain files or other folders.
+- **Idea:** Treat individual objects and groups of objects uniformly.
+- **Simple English:** Like files and folders — a folder can contain files or other folders.
 
 **Use Case:**
 
@@ -215,8 +215,8 @@ Folder --> FileSystem
 
 # 4. Facade Pattern
 
-**Idea:** Provide a simple interface to a complex system.
-**Simple English:** Like a TV remote — one button hides many complex operations inside the TV.
+- **Idea:** Provide a simple interface to a complex system.
+- **Simple English:** Like a TV remote — one button hides many complex operations inside the TV.
 
 **Use Case:**
 
@@ -287,7 +287,7 @@ ComputerFacade --> Disk
 
 ---
 
-# Quick Summary
+# Summary
 
 | Pattern   | Simple English Meaning            | Use Case                  | Pros                 | Cons                      | SOLID Support |
 | --------- | --------------------------------- | ------------------------- | -------------------- | ------------------------- | ------------- |
@@ -295,7 +295,3 @@ ComputerFacade --> Disk
 | Decorator | Add features dynamically          | Coffee with toppings, GUI | Extensible, flexible | Many small classes        | OCP           |
 | Composite | Treat groups and objects the same | File system, GUI trees    | Uniform treatment    | Over-generalization       | SRP, OCP      |
 | Facade    | Simplified interface              | TV remote, JDBC helper    | Hides complexity     | Risk of god object        | SRP           |
-
----
-
-Would you like me to also prepare **a combined PlantUML diagram** showing all four structural patterns together in one view for quick study?
