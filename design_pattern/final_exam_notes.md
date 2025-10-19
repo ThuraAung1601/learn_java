@@ -41,36 +41,6 @@
 
 ---
 
-## Architecture Summary
-
-| Architecture | 💰 Cost | 🧩 Partition | ✨ Simplicity | 📝 Description |
-|---------------|---------|--------------|---------------|----------------|
-| Layered | 👍 Good | 🛠️ Technical | 👍 Good | Components organized in layers with clear separation of concerns |
-| Event-driven | ⚪ Average | 🌐 Domain | ⚪ Average | Uses events to decouple producers and consumers for asynchronous flow |
-| Microkernel | ⚪ Average | 🛠️ Technical | ⚪ Average | Minimal core system with extensible plugins for added functionality |
-| Microservices | 👎 Bad | 🌐 Domain | 👎 Bad | Many small services independently deployable and scalable |
-| Modular Monolithic | 👍 Good | 🌐 Domain | 👍 Good | Single deployable application with internally modular components |
-| Pipeline | ⚪ Average | 🛠️ Technical | 👍 Good | Sequential stages process data in a modular pipeline structure |
-| Service-based | ⚪ Average | 🌐 Domain | 👍 Good | Coarse-grained services that group functionality by business domain |
-| SOA | 👎 Bad | 🌐 Domain | 👎 Bad | Services communicate asynchronously via a shared bus or middleware |
-| Space-based | 👎 Bad | 🌐 Domain | ⚪ Average | In-memory data grid with distributed processing units for scalability |
-
-
-| Architecture | 🛠️ Maintain | ✅ Test | 🚀 Deploy | 🔄 Evolve | ⚡ Resp | 📈 Scale | 🌐 Elastic | ⚠️ Fault | Reason |
-|---------------|-------------|---------|-----------|-----------|---------|----------|------------|----------|--------|
-| Layered | ⚪ Avg | 👍 Good | 👎 Bad | ⚪ Avg | ⚪ Avg | ⚪ Avg | 👎 Bad | 👎 Bad | Layer dependencies make deploy & fault isolation hard |
-| Event-driven | 👍 Good | ⚪ Avg | 👍 Good | 👍 Good | 👍 Good | 👍 Good | 👍 Good | 👍 Good | Independent event-driven components enable scaling & resilience |
-| Microkernel | 👍 Good | 👍 Good | ⚪ Avg | 👍 Good | ⚪ Avg | ⚪ Avg | ⚪ Avg | 👍 Good | Plugins are maintainable & isolated but core changes affect deploy/latency |
-| Microservices | 👍 Good | 👍 Good | 👍 Good | 👍 Good | 👍 Good | 👍 Good | 👍 Good | 👍 Good | Fully independent services allow high deployability, scale, and fault tolerance |
-| Modular Monolithic | ⚪ Avg | 👍 Good | 👎 Bad | ⚪ Avg | 👍 Good | ⚪ Avg | ⚪ Avg | 👎 Bad | Single deploy restricts evolution & increases risk of cascading failures |
-| Pipeline | 👍 Good | 👍 Good | ⚪ Avg | 👍 Good | ⚪ Avg | 👎 Bad | 👎 Bad | 👎 Bad | Stages are modular & testable, but failures propagate through pipeline |
-| Service-based | 👍 Good | 👍 Good | 👍 Good | 👍 Good | 👍 Good | ⚪ Avg | ⚪ Avg | ⚪ Avg | Coarse-grained services ease deploy but limit elastic scaling & fault isolation |
-| SOA | ⚪ Avg | ⚪ Avg | ⚪ Avg | ⚪ Avg | ⚪ Avg | ⚪ Avg | ⚪ Avg | ⚪ Avg | Shared bus/middleware creates dependency, slowing testing, scaling, and evolution |
-| Space-based | 👍 Good | ⚪ Avg | 👍 Good | 👍 Good | 👍 Good | 👍 Good | 👍 Good | 👍 Good | Partitioned memory grid allows independent scaling, deployment, and fault tolerance |
-
----
-
-
 ## Patterns
 # 1. State Pattern
 
