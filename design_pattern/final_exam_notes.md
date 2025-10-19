@@ -1,5 +1,6 @@
 ## Pattern Summary
 
+
 | Pattern                 | Simple English Meaning                     | Use Case                                         | Pros                                                   | Cons                                                  | SOLID Support | Type       |
 | ----------------------- | ------------------------------------------ | ------------------------------------------------ | ------------------------------------------------------ | ----------------------------------------------------- | ------------- | ---------- |
 | State                   | Change behavior when state changes         | Vending machines, game characters                | Simplifies complex conditional logic                   | Can increase number of classes                        | OCP, SRP      | Behavioral |
@@ -12,6 +13,38 @@
 | Bridge                  | Separate abstraction from implementation   | Cross-platform UI, graphics renderers            | Improves flexibility and scalability                   | Increases complexity                                  | OCP, SRP      | Structural |
 | Proxy                   | Control access to another object           | Remote proxy, lazy loading, security proxy       | Adds security and performance optimization             | Can add overhead and complexity                       | SRP           | Structural |
 | Flyweight               | Reuse shared objects efficiently           | Text editors (character objects), game objects   | Reduces memory usage                                   | Complex to implement shared states                    | SRP           | Structural |
+
+Perfect — you already have a structured and detailed set of pattern writeups.
+Here’s how we can **integrate the low-level design principles** (Encapsulation, Interfaces not Implementation, Composition over Inheritance, Loose Coupling) directly into each pattern description — right below the **SOLID** section.
+
+Below is how your updated structure should look (I’ll show full integration for one example and list the mapping for all patterns so you can apply it consistently).
+
+---
+**Low-level Principles:**
+
+* ✅ **Encapsulation:** Each state hides its internal behavior.
+* ✅ **Interfaces not Implementation:** Context interacts via the `State` interface.
+* ✅ **Composition over Inheritance:** Context *has-a* state rather than extending it.
+* ✅ **Loose Coupling:** Context doesn’t depend on specific state classes.
+
+---
+
+## Low-Level Principle Mapping for Each Pattern
+
+| Pattern                     | Encapsulation                                   | Interfaces not Implementation                | Composition over Inheritance                | Loose Coupling                                |
+| --------------------------- | ----------------------------------------------- | -------------------------------------------- | ------------------------------------------- | --------------------------------------------- |
+| **State**                   | ✅ State behavior hidden inside concrete classes | ✅ Uses `State` interface                     | ✅ Context holds state objects               | ✅ Context unaware of concrete states          |
+| **Iterator**                | ✅ Hides traversal logic from client             | ✅ `Iterator` interface defines access        | ⚪ Uses object containment for collection    | ✅ Client only depends on interface            |
+| **Mediator**                | ✅ Centralizes interaction logic                 | ✅ Components use `Mediator` interface        | ✅ Components communicate *through* mediator | ✅ Reduces direct dependencies                 |
+| **Chain of Responsibility** | ✅ Each handler encapsulates its logic           | ✅ Uses `Handler` interface                   | ✅ Next handler *composed* in chain          | ✅ Sender decoupled from receivers             |
+| **Singleton**               | ⚪ Limited encapsulation (global access)         | ⚪ No interface (direct static access)        | ⚪ No composition used                       | ⚪ Tightly coupled global instance             |
+| **Builder**                 | ✅ Encapsulates object construction              | ✅ `Builder` interface/steps define process   | ✅ Uses internal builder object              | ✅ Client decoupled from construction steps    |
+| **Composite**               | ✅ Each component encapsulates structure         | ✅ `Component` interface defines contract     | ✅ Composed child components                 | ✅ Uniform treatment via abstraction           |
+| **Bridge**                  | ✅ Separates abstraction and implementation      | ✅ `Device` interface used                    | ✅ Abstraction *has* an implementor          | ✅ Abstraction independent from implementation |
+| **Proxy**                   | ✅ Controls access internally                    | ✅ `Subject`/`Image` interface defines access | ✅ Proxy *has* a real subject                | ✅ Client unaware of real vs proxy             |
+| **Flyweight**               | ✅ Internal (intrinsic) state hidden             | ✅ Uses `Shape` interface                     | ✅ Factory composes shared instances         | ✅ Clients reuse shared objects                |
+
+---
 
 ## Architectures 
 
