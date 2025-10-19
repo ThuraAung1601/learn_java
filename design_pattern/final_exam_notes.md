@@ -1,18 +1,18 @@
 ## Pattern Summary
 
-
-| Pattern                 | Simple English Meaning                     | Use Case                                         | Pros                                                   | Cons                                                  | SOLID Support | Type       |
-| ----------------------- | ------------------------------------------ | ------------------------------------------------ | ------------------------------------------------------ | ----------------------------------------------------- | ------------- | ---------- |
-| State                   | Change behavior when state changes         | Vending machines, game characters                | Simplifies complex conditional logic                   | Can increase number of classes                        | OCP, SRP      | Behavioral |
-| Iterator                | Access elements without exposing structure | Collection traversal (lists, trees)              | Uniform interface for iteration                        | Overhead for simple collections                       | SRP           | Behavioral |
-| Mediator                | Centralize complex communication           | Chat room, UI components interaction             | Reduces class dependencies                             | Mediator can become complex                           | SRP, OCP      | Behavioral |
-| Chain of Responsibility | Pass requests along a chain until handled  | Logging, request handling, validation pipelines  | Decouples sender and receiver                          | Hard to debug and control flow                        | OCP, SRP      | Behavioral |
-| Singleton               | Ensure one instance globally               | Configuration manager, logging                   | Controlled access to single instance                   | Can lead to hidden dependencies                       | N/A           | Creational |
-| Builder                 | Step-by-step object construction           | Complex object creation (e.g., documents, meals) | Improves readability, allows different representations | Requires multiple classes                             | SRP           | Creational |
-| Composite               | Treat groups of objects as one             | File system, UI hierarchies                      | Simplifies client code                                 | Harder to restrict component types                    | OCP, LSP      | Structural |
-| Bridge                  | Separate abstraction from implementation   | Cross-platform UI, graphics renderers            | Improves flexibility and scalability                   | Increases complexity                                  | OCP, SRP      | Structural |
-| Proxy                   | Control access to another object           | Remote proxy, lazy loading, security proxy       | Adds security and performance optimization             | Can add overhead and complexity                       | SRP           | Structural |
-| Flyweight               | Reuse shared objects efficiently           | Text editors (character objects), game objects   | Reduces memory usage                                   | Complex to implement shared states                    | SRP           | Structural |
+| Pattern                 | Simple English Meaning                     | Use Case                                               | Pros                                                   | Cons                                           | SOLID Support | Type       |
+| ----------------------- | ------------------------------------------ | ------------------------------------------------------ | ------------------------------------------------------ | ---------------------------------------------- | ------------- | ---------- |
+| State                   | Change behavior when state changes         | Vending machines, game characters                      | Simplifies complex conditional logic                   | Can increase number of classes                 | OCP, SRP      | Behavioral |
+| Iterator                | Access elements without exposing structure | Collection traversal (lists, trees)                    | Uniform interface for iteration                        | Overhead for simple collections                | SRP           | Behavioral |
+| Mediator                | Centralize complex communication           | Chat room, UI components interaction                   | Reduces class dependencies                             | Mediator can become complex                    | SRP, OCP      | Behavioral |
+| Chain of Responsibility | Pass requests along a chain until handled  | Logging, request handling, validation pipelines        | Decouples sender and receiver                          | Hard to debug and control flow                 | OCP, SRP      | Behavioral |
+| Singleton               | Ensure one instance globally               | Configuration manager, logging                         | Controlled access to single instance                   | Can lead to hidden dependencies                | N/A           | Creational |
+| Builder                 | Step-by-step object construction           | Complex object creation (e.g., documents, meals)       | Improves readability, allows different representations | Requires multiple classes                      | SRP           | Creational |
+| Composite               | Treat groups of objects as one             | File system, UI hierarchies                            | Simplifies client code                                 | Harder to restrict component types             | OCP, LSP      | Structural |
+| Bridge                  | Separate abstraction from implementation   | Cross-platform UI, graphics renderers                  | Improves flexibility and scalability                   | Increases complexity                           | OCP, SRP      | Structural |
+| Proxy                   | Control access to another object           | Remote proxy, lazy loading, security proxy             | Adds security and performance optimization             | Can add overhead and complexity                | SRP           | Structural |
+| Flyweight               | Reuse shared objects efficiently           | Text editors (character objects), game objects         | Reduces memory usage                                   | Complex to implement shared states             | SRP           | Structural |
+| Visitor                 | Separate operations from objects           | Operations on object structures without modifying them | Adds new operations easily without changing classes    | Can be hard to maintain with many object types | OCP, SRP      | Behavioral |
 
 ---
 **Low-level Principles:**
@@ -597,6 +597,86 @@ public class FlyweightDemo {
             circle.setRadius(5);
             circle.draw();
         }
+    }
+}
+```
+
+# 12. Visitor Pattern
+
+**Definition:** Lets you define new operations on objects without changing their classes.
+
+**Use case:** Performing operations on complex object structures, e.g., compiler syntax trees, file systems, or reporting tools.
+
+**Pros:**
+
+* Adds new operations easily without modifying existing classes.
+* Separates algorithms from the objects they operate on.
+
+**Cons:**
+
+* Harder to maintain if there are many object types.
+* Adding new object types requires modifying the visitor interface.
+
+**SOLID:** Supports **Open/Closed Principle** and **Single Responsibility Principle**.
+
+**Java Example:**
+
+```java
+import java.util.*;
+
+interface ComputerPart {
+    void accept(ComputerPartVisitor visitor);
+}
+
+class Keyboard implements ComputerPart {
+    public void accept(ComputerPartVisitor visitor) {
+        visitor.visit(this);
+    }
+}
+
+class Monitor implements ComputerPart {
+    public void accept(ComputerPartVisitor visitor) {
+        visitor.visit(this);
+    }
+}
+
+class Computer implements ComputerPart {
+    ComputerPart[] parts;
+
+    Computer() {
+        parts = new ComputerPart[] { new Keyboard(), new Monitor() };
+    }
+
+    public void accept(ComputerPartVisitor visitor) {
+        for (ComputerPart part : parts) {
+            part.accept(visitor);
+        }
+        visitor.visit(this);
+    }
+}
+
+interface ComputerPartVisitor {
+    void visit(Keyboard keyboard);
+    void visit(Monitor monitor);
+    void visit(Computer computer);
+}
+
+class ComputerPartDisplayVisitor implements ComputerPartVisitor {
+    public void visit(Keyboard keyboard) {
+        System.out.println("Displaying Keyboard");
+    }
+    public void visit(Monitor monitor) {
+        System.out.println("Displaying Monitor");
+    }
+    public void visit(Computer computer) {
+        System.out.println("Displaying Computer");
+    }
+}
+
+public class VisitorDemo {
+    public static void main(String[] args) {
+        ComputerPart computer = new Computer();
+        computer.accept(new ComputerPartDisplayVisitor());
     }
 }
 ```
