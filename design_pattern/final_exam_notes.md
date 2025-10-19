@@ -17,8 +17,6 @@
 Perfect — you already have a structured and detailed set of pattern writeups.
 Here’s how we can **integrate the low-level design principles** (Encapsulation, Interfaces not Implementation, Composition over Inheritance, Loose Coupling) directly into each pattern description — right below the **SOLID** section.
 
-Below is how your updated structure should look (I’ll show full integration for one example and list the mapping for all patterns so you can apply it consistently).
-
 ---
 **Low-level Principles:**
 
@@ -46,7 +44,21 @@ Below is how your updated structure should look (I’ll show full integration fo
 
 ---
 
-## Architectures 
+## Architecture Summary
+
+| Architecture | 💰 Overall Cost | 🧩 Partitioning Type | 🔢 Number of Quanta | ✨ Simplicity | 🏗️ Modularity | 🛠️ Maintainability | ✅ Testability | 🚀 Deployability | 🔄 Evolvability | ⚡ Responsiveness | 📈 Scalability | 🌐 Elasticity | ⚠️ Fault Tolerance |
+|---------------|----------------|--------------------|-------------------|---------------|----------------|-------------------|---------------|----------------|----------------|----------------|---------------|---------------|------------------|
+| Layered Architecture | 👍 Good (simple components reduce cost) | 🛠️ Technical (layers separate concerns) | 🔹 Low (few layers) | 👍 Good (clear structure) | ⚪ Average (tight coupling across layers) | ⚪ Average (changes ripple across layers) | 👍 Good (unit testing by layer) | 👎 Bad (monolithic deployment) | ⚪ Average (harder to evolve deeply coupled layers) | ⚪ Average (layer traversal adds latency) | ⚪ Average (vertical scaling possible) | 👎 Bad (not fault-isolated) | 
+| Event-driven Architecture | ⚪ Average (middleware adds cost) | 🌐 Domain (event channels per domain) | 🔺 High (many event producers/consumers) | ⚪ Average (async flow is complex) | 👍 Good (independent components) | 👍 Good (add new events easily) | ⚪ Average (harder to test async flows) | 👍 Good (independent deployables) | 👍 Good (new event types easily added) | 👍 Good (fast event responses) | 👍 Good (horizontal scaling with consumers) | 👍 Good (failure isolation via queues) |
+| Microkernel Architecture | ⚪ Average (custom plugin model adds cost) | 🛠️ Technical (core vs plugin separation) | 🔹 Medium (core + plugins) | ⚪ Average (requires plugin contracts) | 👍 Good (clear separation) | 👍 Good (easy to update plugins) | 👍 Good (test plugins independently) | ⚪ Average (core redeploy needed) | 👍 Good (extend via plugins) | ⚪ Average (plugin messaging adds latency) | ⚪ Average (scales per plugin) | 👍 Good (faults isolated to plugins) |
+| Microservices Architecture | 👎 Bad (high infra and integration cost) | 🌐 Domain (bounded contexts) | 🔺 High (many small services) | 👎 Bad (distributed complexity) | 👍 Good (each service isolated) | 👍 Good (independent maintenance) | 👍 Good (test each service independently) | 👍 Good (deploy individually) | 👍 Good (services evolve independently) | 👍 Good (fast, independent services) | 👍 Good (highly scalable per service) | 👍 Good (isolated failures) |
+| Modular Monolithic Architecture | 👍 Good (single deploy reduces infra cost) | 🌐 Domain (modules by business function) | 🔹 Medium (multiple modules within one deploy) | 👍 Good (simple dev and deploy) | ⚪ Average (modules share runtime) | ⚪ Average (module coupling within app) | 👍 Good (test per module) | 👎 Bad (all modules deploy together) | ⚪ Average (evolution limited by single deploy) | 👍 Good (fast communication in-process) | ⚪ Average (scale entire app) | 👎 Bad (failure affects all modules) |
+| Pipeline Architecture | ⚪ Average (moderate setup and cost) | 🛠️ Technical (processing stages) | 🔹 Medium (each stage is a quantum) | 👍 Good (clear data flow) | 👍 Good (each stage modular) | 👍 Good (update one stage easily) | 👍 Good (unit test each stage) | ⚪ Average (stage updates may affect flow) | 👍 Good (add/remove stages easily) | ⚪ Average (latency from multiple stages) | 👍 Good (parallel stage scaling) | ⚪ Average (failure in stage stops flow) |
+| Service-based Architecture | ⚪ Average (less infra than microservices) | 🌐 Domain (coarse-grained services) | 🔹 Medium (fewer, larger services) | 👍 Good (simpler than microservices) | 👍 Good (bounded but shared DB risk) | 👍 Good (manageable maintenance) | 👍 Good (API-based testing) | 👍 Good (deploy per service) | 👍 Good (extend per domain) | 👍 Good (reasonable response) | ⚪ Average (less granular scaling) | ⚪ Average (service-level fault can cascade) |
+| Service-oriented Architecture (SOA) | 👎 Bad (heavy middleware cost) | 🌐 Domain (services with shared bus) | 🔹 Medium (shared bus constrains scaling) | 👎 Bad (ESB adds complexity) | ⚪ Average (shared contracts cause coupling) | ⚪ Average (dependency on shared schema) | ⚪ Average (testing through ESB is complex) | ⚪ Average (depends on ESB config) | ⚪ Average (tight coupling via contracts) | ⚪ Average (bus latency) | ⚪ Average (ESB bottleneck) | ⚪ Average (single bus failure affects system) |
+| Space-based Architecture | 👎 Bad (memory grid setup cost) | 🌐 Domain (data space partitioning) | 🔺 High (many processing units) | ⚪ Average (conceptually complex) | 👍 Good (partitioned processing units) | 👍 Good (minimal shared state) | ⚪ Average (difficult to replicate test env) | 👍 Good (units deploy independently) | 👍 Good (nodes added easily) | 👍 Good (in-memory processing is fast) | 👍 Good (scale by adding nodes) | 👍 Good (node failure tolerated) |
+
+---
 
 
 ## Patterns
