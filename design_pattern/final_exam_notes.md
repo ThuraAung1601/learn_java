@@ -43,17 +43,18 @@
 
 ## Architecture Summary
 
-| Architecture | 💰 Cost | 🧩 Partition | 🔢 Quanta | ✨ Simplicity |
-|---------------|---------|--------------|-----------|---------------|
-| Layered | 👍 Good | 🛠️ Technical | 1 | 👍 Good |
-| Event-driven | ⚪ Average | 🌐 Domain | M | ⚪ Average |
-| Microkernel | ⚪ Average | 🛠️ Technical | M | ⚪ Average |
-| Microservices | 👎 Bad | 🌐 Domain | M | 👎 Bad |
-| Modular Monolithic | 👍 Good | 🌐 Domain | M | 👍 Good |
-| Pipeline | ⚪ Average | 🛠️ Technical | M | 👍 Good |
-| Service-based | ⚪ Average | 🌐 Domain | M | 👍 Good |
-| SOA | 👎 Bad | 🌐 Domain | M | 👎 Bad |
-| Space-based | 👎 Bad | 🌐 Domain | M | ⚪ Average |
+| Architecture | 💰 Cost | 🧩 Partition | 🔢 Quanta | ✨ Simplicity | 📝 Description |
+|---------------|---------|--------------|-----------|---------------|----------------|
+| Layered | 👍 Good | 🛠️ Technical | 1 | 👍 Good | Components organized in layers with clear separation of concerns |
+| Event-driven | ⚪ Average | 🌐 Domain | M | ⚪ Average | Uses events to decouple producers and consumers for asynchronous flow |
+| Microkernel | ⚪ Average | 🛠️ Technical | M | ⚪ Average | Minimal core system with extensible plugins for added functionality |
+| Microservices | 👎 Bad | 🌐 Domain | M | 👎 Bad | Many small services independently deployable and scalable |
+| Modular Monolithic | 👍 Good | 🌐 Domain | M | 👍 Good | Single deployable application with internally modular components |
+| Pipeline | ⚪ Average | 🛠️ Technical | M | 👍 Good | Sequential stages process data in a modular pipeline structure |
+| Service-based | ⚪ Average | 🌐 Domain | M | 👍 Good | Coarse-grained services that group functionality by business domain |
+| SOA | 👎 Bad | 🌐 Domain | M | 👎 Bad | Services communicate asynchronously via a shared bus or middleware |
+| Space-based | 👎 Bad | 🌐 Domain | M | ⚪ Average | In-memory data grid with distributed processing units for scalability |
+
 
 | Architecture | 🛠️ Maintain | ✅ Test | 🚀 Deploy | 🔄 Evolve | ⚡ Resp | 📈 Scale | 🌐 Elastic | ⚠️ Fault | Reason |
 |---------------|-------------|---------|-----------|-----------|---------|----------|------------|----------|--------|
