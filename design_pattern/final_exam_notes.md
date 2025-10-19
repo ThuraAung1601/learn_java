@@ -55,17 +55,17 @@
 | SOA | 👎 Bad | 🌐 Domain | M | 👎 Bad |
 | Space-based | 👎 Bad | 🌐 Domain | M | ⚪ Average |
 
-| Architecture | 🛠️ Maintain | ✅ Test | 🚀 Deploy | 🔄 Evolve | ⚡ Resp | 📈 Scale | 🌐 Elastic | ⚠️ Fault |
-|---------------|-------------|---------|-----------|-----------|---------|----------|------------|----------|
-| Layered | ⚪ Avg | 👍 Good | 👎 Bad | ⚪ Avg | ⚪ Avg | ⚪ Avg | 👎 Bad | 👎 Bad |
-| Event-driven | 👍 Good | ⚪ Avg | 👍 Good | 👍 Good | 👍 Good | 👍 Good | 👍 Good | 👍 Good |
-| Microkernel | 👍 Good | 👍 Good | ⚪ Avg | 👍 Good | ⚪ Avg | ⚪ Avg | ⚪ Avg | 👍 Good |
-| Microservices | 👍 Good | 👍 Good | 👍 Good | 👍 Good | 👍 Good | 👍 Good | 👍 Good | 👍 Good |
-| Modular Monolithic | ⚪ Avg | 👍 Good | 👎 Bad | ⚪ Avg | 👍 Good | ⚪ Avg | ⚪ Avg | 👎 Bad |
-| Pipeline | 👍 Good | 👍 Good | ⚪ Avg | 👍 Good | ⚪ Avg | 👍 Good | ⚪ Avg | ⚪ Avg |
-| Service-based | 👍 Good | 👍 Good | 👍 Good | 👍 Good | 👍 Good | ⚪ Avg | ⚪ Avg | ⚪ Avg |
-| SOA | ⚪ Avg | ⚪ Avg | ⚪ Avg | ⚪ Avg | ⚪ Avg | ⚪ Avg | ⚪ Avg | ⚪ Avg |
-| Space-based | 👍 Good | ⚪ Avg | 👍 Good | 👍 Good | 👍 Good | 👍 Good | 👍 Good | 👍 Good |
+| Architecture | 🛠️ Maintain | ✅ Test | 🚀 Deploy | 🔄 Evolve | ⚡ Resp | 📈 Scale | 🌐 Elastic | ⚠️ Fault | Reason |
+|---------------|-------------|---------|-----------|-----------|---------|----------|------------|----------|--------|
+| Layered | ⚪ Avg | 👍 Good | 👎 Bad | ⚪ Avg | ⚪ Avg | ⚪ Avg | 👎 Bad | 👎 Bad | Layer dependencies make deploy & fault isolation hard |
+| Event-driven | 👍 Good | ⚪ Avg | 👍 Good | 👍 Good | 👍 Good | 👍 Good | 👍 Good | 👍 Good | Independent event-driven components enable scaling & resilience |
+| Microkernel | 👍 Good | 👍 Good | ⚪ Avg | 👍 Good | ⚪ Avg | ⚪ Avg | ⚪ Avg | 👍 Good | Plugins are maintainable & isolated but core changes affect deploy/latency |
+| Microservices | 👍 Good | 👍 Good | 👍 Good | 👍 Good | 👍 Good | 👍 Good | 👍 Good | 👍 Good | Fully independent services allow high deployability, scale, and fault tolerance |
+| Modular Monolithic | ⚪ Avg | 👍 Good | 👎 Bad | ⚪ Avg | 👍 Good | ⚪ Avg | ⚪ Avg | 👎 Bad | Single deploy restricts evolution & increases risk of cascading failures |
+| Pipeline | 👍 Good | 👍 Good | ⚪ Avg | 👍 Good | ⚪ Avg | 👍 Good | ⚪ Avg | ⚪ Avg | Stages are modular & testable, but failures propagate through pipeline |
+| Service-based | 👍 Good | 👍 Good | 👍 Good | 👍 Good | 👍 Good | ⚪ Avg | ⚪ Avg | ⚪ Avg | Coarse-grained services ease deploy but limit elastic scaling & fault isolation |
+| SOA | ⚪ Avg | ⚪ Avg | ⚪ Avg | ⚪ Avg | ⚪ Avg | ⚪ Avg | ⚪ Avg | ⚪ Avg | Shared bus/middleware creates dependency, slowing testing, scaling, and evolution |
+| Space-based | 👍 Good | ⚪ Avg | 👍 Good | 👍 Good | 👍 Good | 👍 Good | 👍 Good | 👍 Good | Partitioned memory grid allows independent scaling, deployment, and fault tolerance |
 
 ---
 
