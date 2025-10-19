@@ -43,29 +43,29 @@
 
 ## Architecture Summary
 
-| Architecture | 💰 Overall Cost | 🧩 Partitioning Type | 🔢 Number of Quanta | ✨ Simplicity |
-|---------------|----------------|--------------------|-------------------|---------------|
-| Layered Architecture | 👍 Good | 🛠️ Technical | 1 | 👍 Good |
-| Event-driven Architecture | ⚪ Average | 🌐 Domain | M | ⚪ Average |
-| Microkernel Architecture | ⚪ Average | 🛠️ Technical | M | ⚪ Average |
-| Microservices Architecture | 👎 Bad | 🌐 Domain | M | 👎 Bad |
-| Modular Monolithic Architecture | 👍 Good | 🌐 Domain | M | 👍 Good |
-| Pipeline Architecture | ⚪ Average | 🛠️ Technical | M | 👍 Good |
-| Service-based Architecture | ⚪ Average | 🌐 Domain | M | 👍 Good |
-| Service-oriented Architecture (SOA) | 👎 Bad | 🌐 Domain | M | 👎 Bad |
-| Space-based Architecture | 👎 Bad | 🌐 Domain | M | ⚪ Average |
+| Architecture | 💰 Cost | 🧩 Partition | 🔢 Quanta | ✨ Simplicity |
+|---------------|---------|--------------|-----------|---------------|
+| Layered | 👍 Good | 🛠️ Technical | 1 | 👍 Good |
+| Event-driven | ⚪ Average | 🌐 Domain | M | ⚪ Average |
+| Microkernel | ⚪ Average | 🛠️ Technical | M | ⚪ Average |
+| Microservices | 👎 Bad | 🌐 Domain | M | 👎 Bad |
+| Modular Monolithic | 👍 Good | 🌐 Domain | M | 👍 Good |
+| Pipeline | ⚪ Average | 🛠️ Technical | M | 👍 Good |
+| Service-based | ⚪ Average | 🌐 Domain | M | 👍 Good |
+| SOA | 👎 Bad | 🌐 Domain | M | 👎 Bad |
+| Space-based | 👎 Bad | 🌐 Domain | M | ⚪ Average |
 
-| Architecture | 🏗️ Modularity | 🛠️ Maintainability | ✅ Testability | 🚀 Deployability | 🔄 Evolvability | ⚡ Responsiveness | 📈 Scalability | 🌐 Elasticity | ⚠️ Fault Tolerance |
-|---------------|----------------|-------------------|---------------|----------------|----------------|----------------|---------------|---------------|------------------|
-| Layered Architecture | ⚪ Average | ⚪ Average | 👍 Good | 👎 Bad | ⚪ Average | ⚪ Average | ⚪ Average | 👎 Bad | 👎 Bad |
-| Event-driven Architecture | 👍 Good | 👍 Good | ⚪ Average | 👍 Good | 👍 Good | 👍 Good | 👍 Good | 👍 Good | 👍 Good |
-| Microkernel Architecture | 👍 Good | 👍 Good | 👍 Good | ⚪ Average | 👍 Good | ⚪ Average | ⚪ Average | ⚪ Average | 👍 Good |
-| Microservices Architecture | 👍 Good | 👍 Good | 👍 Good | 👍 Good | 👍 Good | 👍 Good | 👍 Good | 👍 Good | 👍 Good |
-| Modular Monolithic Architecture | ⚪ Average | ⚪ Average | 👍 Good | 👎 Bad | ⚪ Average | 👍 Good | ⚪ Average | ⚪ Average | 👎 Bad |
-| Pipeline Architecture | 👍 Good | 👍 Good | 👍 Good | ⚪ Average | 👍 Good | ⚪ Average | 👍 Good | ⚪ Average | ⚪ Average |
-| Service-based Architecture | 👍 Good | 👍 Good | 👍 Good | 👍 Good | 👍 Good | 👍 Good | ⚪ Average | ⚪ Average | ⚪ Average |
-| Service-oriented Architecture (SOA) | ⚪ Average | ⚪ Average | ⚪ Average | ⚪ Average | ⚪ Average | ⚪ Average | ⚪ Average | ⚪ Average | ⚪ Average |
-| Space-based Architecture | 👍 Good | 👍 Good | ⚪ Average | 👍 Good | 👍 Good | 👍 Good | 👍 Good | 👍 Good | 👍 Good |
+| Architecture | 🛠️ Maintain | ✅ Test | 🚀 Deploy | 🔄 Evolve | ⚡ Resp | 📈 Scale | 🌐 Elastic | ⚠️ Fault |
+|---------------|-------------|---------|-----------|-----------|---------|----------|------------|----------|
+| Layered | ⚪ Avg | 👍 Good | 👎 Bad | ⚪ Avg | ⚪ Avg | ⚪ Avg | 👎 Bad | 👎 Bad |
+| Event-driven | 👍 Good | ⚪ Avg | 👍 Good | 👍 Good | 👍 Good | 👍 Good | 👍 Good | 👍 Good |
+| Microkernel | 👍 Good | 👍 Good | ⚪ Avg | 👍 Good | ⚪ Avg | ⚪ Avg | ⚪ Avg | 👍 Good |
+| Microservices | 👍 Good | 👍 Good | 👍 Good | 👍 Good | 👍 Good | 👍 Good | 👍 Good | 👍 Good |
+| Modular Monolithic | ⚪ Avg | 👍 Good | 👎 Bad | ⚪ Avg | 👍 Good | ⚪ Avg | ⚪ Avg | 👎 Bad |
+| Pipeline | 👍 Good | 👍 Good | ⚪ Avg | 👍 Good | ⚪ Avg | 👍 Good | ⚪ Avg | ⚪ Avg |
+| Service-based | 👍 Good | 👍 Good | 👍 Good | 👍 Good | 👍 Good | ⚪ Avg | ⚪ Avg | ⚪ Avg |
+| SOA | ⚪ Avg | ⚪ Avg | ⚪ Avg | ⚪ Avg | ⚪ Avg | ⚪ Avg | ⚪ Avg | ⚪ Avg |
+| Space-based | 👍 Good | ⚪ Avg | 👍 Good | 👍 Good | 👍 Good | 👍 Good | 👍 Good | 👍 Good |
 
 ---
 
