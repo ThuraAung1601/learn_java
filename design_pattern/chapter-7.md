@@ -106,7 +106,6 @@ A technically partitioned architecture based on separation of concerns.
 ### Style Characteristics
 | Characteristic       | Value |
 |---------------------|-------|
-| Overall Cost         | $     |
 | Partitioning Type    | Technical |
 | Number of Quanta     | 1     |
 | Simplicity           | ☆     |
