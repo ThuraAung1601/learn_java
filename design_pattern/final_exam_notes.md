@@ -1,3 +1,11 @@
+## all notes
+- https://github.com/ThuraAung1601/learn_java/blob/main/design_pattern/chapter-7.md
+- https://github.com/ThuraAung1601/learn_java/blob/main/design_pattern/chapter-8.md
+- https://github.com/ThuraAung1601/learn_java/blob/main/design_pattern/chapter-9.md
+- https://github.com/ThuraAung1601/learn_java/blob/main/design_pattern/chapter-10.md
+- https://github.com/ThuraAung1601/learn_java/blob/main/design_pattern/chapter-11.md
+- https://github.com/ThuraAung1601/learn_java/blob/main/design_pattern/chapter-12.md
+  
 ## Pattern Summary
 
 | Pattern                 | Simple English Meaning                     | Use Case                                               | Pros                                                   | Cons                                           | SOLID Support | Type       |
