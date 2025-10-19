@@ -53,7 +53,6 @@
 ### Style Characteristics
 | Characteristic       | Value |
 |---------------------|-------|
-| Overall Cost         | $     |
 | Partitioning Type    | Technical |
 | Number of Quanta     | 1     |
 | Simplicity           | ☆☆    |
@@ -61,7 +60,7 @@
 | Maintainability      | ☆☆    |
 | Testability          | ☆☆    |
 | Deployability        | ☆☆    |
-| Evolvability         | ^     |
+| Evolvability         |  ☆    |
 | Responsiveness       | ☆     |
 | Scalability          | ☆     |
 | Elasticity           | ☆     |
