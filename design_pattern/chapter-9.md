@@ -1,313 +1,318 @@
 # Chapter 9
-# Software Design and Architecture: Foundations and Patterns
+# Software Design and Architecture
 
-## Architecture Styles
-Describes named relationships of components, covering various architectural characteristics. Names act as shorthand among experienced architects (similar to design patterns).
+## Bridge Pattern
 
-### Common Architecture Styles
-- Layered architecture  
-- Microkernel architecture  
-- Microservices architecture  
-- Modular monolithic architecture  
-- Event-driven architecture  
-- Pipeline architecture  
-- Service-based architecture  
-- Service-oriented architecture  
-- Space-based architecture  
+### Problem
+"Hardening of the software arteries" occurs when subclassing an abstract base class is used to provide alternative implementations, leading to compile-time binding between interface and implementation. The abstraction and implementation cannot be independently extended or composed.
 
-### Categorizing Architecture Styles
+### Bottom-Up Design Example
+Consider shapes (Abstract) drawing themselves using different drawing libraries (Implementations) such as Monitor, Printer, or OffScreenBuffer. Each library might have slightly different methods and signatures.
 
-**Based on Deployment Model:**  
-- **Monolithic:** All components deployed as a single unit.  
-- **Distributed:** Components deployed separately as multiple units.  
-
-**Based on Technical Partitioning:**  
-- Layered  
-
-**Based on Domain Partitioning:**  
-- Modular monolith  
-
----
-
-## Monolithic vs. Distributed Architectures
-
-**Monolithic:**  
-- Single deployment unit  
-- Includes Layered, Modular Monolith, Pipeline, and Microkernel architectures  
-
-**Distributed:**  
-- Multiple deployment units connected through remote access protocols  
-- Includes Service-based, Event-driven, Space-based, Service-oriented, and Microservices architectures  
-
-### Monolithic Architectures: Pros
-- Easy to develop and understand  
-- Easy to debug (all code in one place)  
-- Often inexpensive to build  
-- Good for rapid product development  
-
-### Monolithic Architectures: Cons
-- All-or-nothing scaling  
-- Unreliable: a single bug can crash the entire application  
-
-### Distributed Architectures: Pros
-- Highly scalable (components scale independently)  
-- Encourage modularity, simplifying testing  
-
-### Distributed Architectures: Cons
-- Expensive to develop, maintain, and debug  
-- Complex due to network communication between services  
-
----
-
-## Layered Architecture Style
-A technically partitioned architecture based on separation of concerns.
-
-### Logical Topology
-- Presentation Layer  
-- Business Layer  
-- Persistence Layer  
-- Database Layer  
-
-### Physical Topology
-- Multiple instances of the logical topology can be deployed  
-
-### Layers of Isolation
-- **Closed Layer:** Request must go through each layer  
-- **Open Layer:** Request can bypass layers  
-- Isolation ensures changes in one layer generally don't impact others  
-
-### Adding Layers
-- Adding a services layer can enforce restrictions on layer access  
-
-### Other Considerations
-- Good starting point when the final architecture is unknown  
-- Avoid the "sink hole architecture" anti-pattern (pass-through processing)  
-
-### Data Topologies
-- Single, monolithic database is common  
-
-### Cloud Considerations
-- **Advantage:** Technical partitioning fits well with cloud deployments  
-- **Disadvantage:** Communication latency between on-premises and cloud can be problematic  
-
-### Common Risks
-- Fault tolerance: Single failure can crash the entire application  
-- Availability: High mean time to recover (MTTR)  
-
-### Governance
-- Excellent for governance  
-- Easy to define Fitness Function libraries  
-- Allows automated governance of relationships between layers  
-
-### Team Topology Considerations
-- Independent of team topologies  
-
-### Style Characteristics
-| Characteristic       | Value |
-|---------------------|-------|
-| Overall Cost         | $     |
-| Partitioning Type    | Technical |
-| Number of Quanta     | 1     |
-| Simplicity           | ☆     |
-| Modularity           | ☆☆    |
-| Maintainability      | ☆☆    |
-| Testability          | ☆☆☆   |
-| Deployability        | ☆     |
-| Evolvability         | ☆     |
-| Responsiveness       | ☆     |
-| Scalability          | ☆     |
-| Elasticity           | ☆     |
-| Fault Tolerance      | ☆     |
-
-### When to Use
-- Small, simple applications or websites  
-- Tight budget and time constraints  
-- Unsure which architecture style is best  
-
-### When Not to Use
-- When the system requires high maintainability, agility, testability, and deployability  
-
----
-
-## Modular Monolith Style
-A domain-partitioned architecture where functionality is grouped by domain area (modules).
-
-### Topology
-- Functionality is grouped by domain area, with domains called modules  
-
-### Monolithic Structure
-- All source code in one place  
-- Easy to maintain, test, and deploy  
-- Requires strict governance to maintain module boundaries  
-- Risk of excessive code reuse and communication between modules  
-
-### Modular Structure
-- Modules are self-contained artifacts (JAR/DLL)  
-- Suited to independent teams working on separate modules  
-- Works well for larger, complex systems where modules require different expertise  
-- Tends to have less reuse and less module communication  
-
-### Module Communication
-- **Peer-to-peer approach:** Modules communicate directly  
-- **Mediator approach:** Modules communicate through a central mediator  
-
-### Data Topologies
-- Multiple modules sharing one or more databases  
-
-### Cloud Considerations
-- Not generally well-suited for cloud deployment, though small systems can leverage cloud services  
-
-### Common Risks
-- Becomes too large to maintain, test, and deploy  
-- Slow change implementation  
-- Unexpected breakages  
-- Team members interfering with each other  
-- Slow startup times  
-- Overboard code reuse  
-
-### Governance
-- Define and enforce module compliance  
-- Control the amount of communication between modules  
-
-### Team Topology Considerations
-- Works best when teams are organized by domain area (cross-functional teams)  
-
-### Style Characteristics
-| Characteristic       | Value |
-|---------------------|-------|
-| Overall Cost         | $     |
-| Partitioning Type    | Domain |
-| Number of Quanta     | 1     |
-| Simplicity           | ☆     |
-| Modularity           | ☆☆☆   |
-| Maintainability      | ☆☆    |
-| Testability          | ☆☆    |
-| Deployability        | ☆☆    |
-| Evolvability         | ☆☆    |
-| Responsiveness       | ☆     |
-| Scalability          | ☆     |
-| Elasticity           | ☆     |
-| Fault Tolerance      | ☆     |
-
-### When to Use
-- Tight budget and time constraints  
-- Unclear architectural direction  
-- Domain-focused teams (cross-functional)  
-- Majority of changes are domain-based  
-- Teams engaging in Domain-Driven Design (DDD)  
-
-### When Not to Use
-- Systems requiring high scalability, elasticity, availability, fault tolerance, responsiveness, and performance  
-- When majority of changes are technically oriented  
-
----
-
-## Singleton and State Patterns
-
-### Design Principles
-**High-level:** Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion  
-**Low-level:** Encapsulate what varies, Program to interfaces, Favor composition, Loose coupling  
-
----
-
-### Singleton Pattern
-Ensures a class has only one instance and provides a global access point.
-
-**Problem:**  
-Multiple instantiations lead to incorrect behavior, overuse of resources, and inconsistent results.
-
-**Solution:**
-```java
-public class Singleton {
-    private static Singleton uniqueInstance;
-    private Singleton() {} // private constructor
-    public static Singleton getInstance() { // static method
-        if (uniqueInstance == null) { // Lazy instantiation
-            uniqueInstance = new Singleton();
-        }
-        return uniqueInstance;
-    }
-}
+**Examples of Drawing Libraries**  
+**Monitor:**  
+```text
+draw_a_line(x1, y1, x2, y2)
+draw_a_circle(x, y, r)
 ````
 
-**Thread Safety Solutions:**
+**Printer:**
 
-* **Synchronized Method**
-
-```java
-public static synchronized Singleton getInstance() {
-    if (uniqueInstance == null) {
-        uniqueInstance = new Singleton();
-    }
-    return uniqueInstance;
-}
+```text
+drawline(x1, x2, y1, y2)
+drawcircle(x, y, r)
 ```
 
-* **Eager Instantiation**
+**Examples of Shapes**
+We want to create collections of rectangles and circles and have them draw themselves regardless of the medium.
 
-```java
-private static Singleton uniqueInstance = new Singleton();
+```text
+Shape
++draw()
+
+Rectangle
++draw()
+
+Circle
++draw()
 ```
 
-* **Double-Checked Locking**
+### Approach One: Inheritance for Specialization
 
-```java
-private volatile static Singleton uniqueInstance;
-public static Singleton getInstance() {
-    if (uniqueInstance == null) {
-        synchronized (Singleton.class) {
-            if (uniqueInstance == null) {
-                uniqueInstance = new Singleton();
-            }
-        }
-    }
-    return uniqueInstance;
-}
+* Create subclasses for each combination of shape and library (e.g., MonitorRect, PrinterRect, MonitorCircle, PrinterCircle).
+  **Problem:** Class explosion (`n × m` subclasses for `n` shapes and `m` libraries).
+
+**Design Problems:**
+
+* Redundancy (duplication)
+* Tight Coupling (subclasses highly dependent on drawing libraries)
+* Weak Cohesion (shapes need to know about their drawing libraries)
+
+### Approach Two: Inheritance for Library Specialization
+
+* Create subclasses for each library, then subclasses of those for each shape.
+  **Problem:** Same scaling issues as Approach One.
+
+### Solution: Bridge Pattern
+
+* **Encapsulate what varies:** Shapes and Drawing Libraries.
+* **Abstract DrawingService:** Defines a uniform interface for drawing operations.
+* **Wrap each library** behind the `DrawingService` interface (e.g., `WrapMonitor`, `WrapPrinter`).
+* **Favor Delegation:** Shape delegates to DrawingLibrary.
+
+**Classes:**
+
+```text
+Shape
++draw()
+
+DrawingService
++drawLine(x1, y1, x2, y2)
++drawCircle(x, y)
+
+Rectangle
++draw()
+
+Circle
++draw()
+
+WrapMonitor
++drawLine(x1, y1, x2, y2)
++drawCircle(x, y)
+
+WrapPrinter
++drawLine(x1, y1, x2, y2)
++drawCircle(x, y)
 ```
 
-* **Lazy Loading (Initialization-on-demand holder idiom)**
+**Definition:**
+The Bridge Pattern decouples an abstraction from its implementation so that the two can vary independently.
 
-```java
-public class Singleton {
-    private Singleton() {}
-    private static class LazyHolder {
-        static final Singleton INSTANCE = new Singleton();
-    }
-    public static Singleton getInstance() {
-        return LazyHolder.INSTANCE;
-    }
-}
+**Class Diagram:**
+
+```text
+Abstraction
++operation()
+
+Variation
++operation()
+imp.operationImpl()
+
+Implementor
++operationImpl()
+
+ConcreteImplementorA
++operationImpl()
+
+ConcreteImplementorB
++operationImpl()
 ```
-
-**Benefits:**
-
-* Ensures only one instance
-* Provides global access
 
 ---
 
-### State Pattern
+## Mediator Pattern
 
-Allows an object to alter its behavior when its internal state changes. The object will appear to change its class.
+### Problem
 
-**Problem:**
-Methods with large conditional statements based on object state are difficult to maintain and extend.
+Dependencies between potentially reusable pieces can lead to "spaghetti code."
 
-**State Interface:**
+* "All or nothing" reuse
+* "Change one and fix the rest" maintenance
+* Distributed behavior is hard to extend
+* Participants cannot be reused in other contexts
+
+### Solution
+
+* **Encapsulate what varies:** Interconnections
+* Promote loose coupling by preventing objects from referring to each other explicitly
+* Vary their interaction independently
+
+**Definition:**
+The Mediator Pattern defines an object that encapsulates how a set of objects interact.
+
+**Class Diagram:**
+
+```text
+Mediator
+    |
+Colleague
+    |
+ConcreteMediator
+    |
+ConcreteColleague1
+ConcreteColleague2
+```
+
+**Code Example:**
 
 ```java
-public interface State {
-    public void doThis();
-    public void doThat();
+abstract class Mediator {
+    public abstract void colleagueChanged(Colleague c);
+}
+
+abstract class Colleague {
+    private Mediator myMediator;
+    public Colleague(Mediator mediator) { this.myMediator = mediator; }
+    public void changed(){ myMediator.colleagueChanged(this); }
 }
 ```
 
-**Implementation:**
+**Example: GUI Components**
 
-* Each state implements the `State` interface and defines specific behavior
-* The context class holds a reference to the current state and delegates method calls to it
-* State transitions are handled within the state classes, modifying the context state as needed
+```java
+class ListBox extends Colleague { ... }
+class Button extends Colleague { ... }
+class TextField extends Colleague { ... }
+class CheckBox extends Colleague { ... }
+class FontDialogBox extends Mediator { ... }
+```
 
-**Example: Gumball Machine**
+---
 
-* States: `NoQuarter`, `HasQuarter`, `Sold`, `SoldOut`, `WinnerState`
+## Proxy Pattern
+
+### Problem
+
+Objects overburden each other with networking, security, access coherence, or historic interface requirements. Core functionality should not include these concerns.
+
+### Definition
+
+The Proxy Pattern provides a surrogate or placeholder for another object to control access to it.
+
+**Class Diagram:**
+
+```text
+<<Subject>>
++request()
+
+RealSubject
++request()
+
+Proxy
++request() // proxy instantiates real subject
+```
+
+**Types of Proxies:**
+
+* Remote Proxy
+* Virtual Proxy
+* Protection Proxy
+* Cache Proxy
+* Firewall Proxy
+* Synchronization Proxy
+* Smart Reference Proxy
+
+**Proxy vs Decorator:**
+
+* Proxy controls access to an object
+* Decorator adds behavior to an object
+
+---
+
+## Service-Based Architecture Style
+
+### Examples and Use Cases
+
+* User interfaces: Receiving, Recycling, Accounting, Customer (web & kiosk)
+* Services: Receiving Assessment, Recycling, Accounting, Reporting, Quoting, Item Status
+
+### Topology
+
+* Distributed macro layered structure:
+
+  * Separately deployed user interface
+  * Separately deployed remote coarse-grained services (domain services)
+  * A monolithic database
+
+### Style Specifics
+
+* Domain service design: API Facade, Business Logic, Persistence layers
+* User interface variants: Monolithic, Domain-Based, Service-Based
+* API Gateway Options: Proxy or Gateway
+* Data Topologies: Database per service or shared database
+
+### Cloud Considerations
+
+* Works well in cloud environments
+* Domain services as containerized services
+* Leverage cloud file storage, database, and messaging
+
+### Common Risks
+
+* Too much communication between domain services
+* Too many domain services (testing, deployment, monitoring, DB connections)
+
+### Governance
+
+* Ensure changes don’t span multiple domain services
+* Govern communication between services
+
+### Style Characteristics
+
+| Characteristic    | Rating    |
+| ----------------- | --------- |
+| Partitioning type | Domain    |
+| Number of quanta  | 1 to many |
+| Simplicity        | ⋆⋆⋆       |
+| Modularity        | ⋆⋆⋆⋆      |
+| Maintainability   | ⋆⋆⋆       |
+| Testability       | ⋆⋆        |
+| Deployability     | ⋆⋆⋆       |
+| Evolvability      | ⋆⋆        |
+| Responsiveness    | ⋆⋆⋆       |
+| Scalability       | ⋆⋆⋆⋆      |
+| Elasticity        | ⋆⋆⋆       |
+| Fault tolerance   | ⋆⋆⋆       |
+
+---
+
+## Orchestration-Driven Service-Oriented Architecture
+
+### Examples and Use Cases
+
+* Enterprise-wide integration of heterogeneous systems
+
+### Philosophy
+
+* Enterprise-level reuse with no duplicated services
+
+### Topology
+
+* Business Services (BS)
+* Enterprise Service Bus (ESB) – Orchestration Engine & Integration Hub
+* Enterprise Services (ES), Application Services (AS), Infrastructure Services (IS)
+
+### Taxonomy
+
+* **Business Services:** Input/output/schema info, no code
+* **Enterprise Services:** Fine-grained, shared implementations
+* **Application Services:** Fine-grained, single application
+* **Infrastructure Services:** Operational concerns (monitoring, logging, auth)
+
+### Message Flow
+
+* All requests go through the orchestration engine
+
+### Trade-Offs
+
+* Reuse at service level leads to high coupling
+* Changes have ripple effects
+* Domain concepts spread thinly
+
+### Style Characteristics
+
+| Characteristic    | Rating    |
+| ----------------- | --------- |
+| Partitioning type | Technical |
+| Number of quanta  | 1 to many |
+| Simplicity        | ⋆⋆⋆       |
+| Modularity        | ⋆⋆⋆⋆      |
+| Maintainability   | ⋆⋆        |
+| Testability       | ⋆⋆        |
+| Deployability     | ⋆⋆        |
+| Evolvability      | ⋆⋆        |
+| Responsiveness    | ⋆⋆        |
+| Scalability       | ⋆⋆⋆       |
+| Elasticity        | ⋆⋆⋆       |
+| Fault tolerance   | ⋆⋆⋆       |
+
